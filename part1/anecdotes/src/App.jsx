@@ -13,7 +13,7 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
-  const [mostVoted, setMostVoted] = useState(0);
+  const [mostVoted, setMostVoted] = useState(-1);
   const [votes, setVotes] = useState([]);
 
   const nextAnecdote = () => {
@@ -35,9 +35,6 @@ const App = () => {
       setMostVoted(anecdoteIndex);
     }
     setVotes([...votes]);
-    console.log("updated votes:", votes);
-    console.log("most voted anecdote index:", mostVoted);
-    console.log("most voted anecdote:", anecdotes[mostVoted]);
   };
 
   const AnecdoteOfTheDay = () => {
@@ -52,21 +49,23 @@ const App = () => {
   };
 
   const MostVotedAnecdote = () => {
+    if (anecdotes[mostVoted]) {
+      return (
+        <div>
+          <h1>Anecdote with the most votes</h1>
+          <p>{anecdotes[mostVoted]}</p>
+          <p>has {votes[mostVoted] || 0} votes</p>
+        </div>
+      );
+    }
+  }
+
     return (
       <div>
-        <h1>Anecdote with the most votes</h1>
-        <p>{anecdotes[mostVoted]}</p>
-        <p>has {votes[mostVoted] || 0} votes</p>
+        <AnecdoteOfTheDay />
+        <MostVotedAnecdote />
       </div>
     );
   };
-
-  return (
-    <div>
-      <AnecdoteOfTheDay />
-      <MostVotedAnecdote />
-    </div>
-  );
-};
 
 export default App;
