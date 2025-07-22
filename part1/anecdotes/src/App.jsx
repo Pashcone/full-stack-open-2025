@@ -22,14 +22,11 @@ const App = () => {
       return nextAnecdote();
     }
     setSelected(randomNumber);
-    console.log("selected anecdote index:", randomNumber);
   };
 
   const voteAnecdote = () => {
-    console.log("voting for anecdote:", selected);
     const anecdoteIndex = selected;
     votes[anecdoteIndex] = (votes[anecdoteIndex] || 0) + 1;
-    console.log("votes:", votes);
 
     if (votes[anecdoteIndex] > (votes[mostVoted] || 0)) {
       setMostVoted(anecdoteIndex);
