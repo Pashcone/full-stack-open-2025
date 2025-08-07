@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 
 const app = express();
 
@@ -27,23 +28,24 @@ let persons = [
 ];
 
 const requestLogger = (request, response, next) => {
-  console.log('Method:', request.method)
-  console.log('Path:  ', request.path)
-  console.log('Body:  ', request.body)
-  console.log('---')
-  next()
-}
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("---");
+  next();
+};
 
+app.use(express.json());
+app.use(requestLogger);
+app.use(express.static('dist'))
 
-app.use(express.json())
-app.use(requestLogger)
+morgan.token("body", (req) => {
+  return req.method === "POST" ? JSON.stringify(req.body) : "";
+});
 
-morgan.token('body', (req) => {
-  return req.method === 'POST' ? JSON.stringify(req.body) : ''
-})
-
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
-
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms :body")
+);
 
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
@@ -101,9 +103,16 @@ app.post("/api/persons", (request, response) => {
 
 app.delete("/api/persons/:id", (request, response) => {
   const id = request.params.id;
+  console.log("delete id", id);
+  const deletedPerson = persons.find((person) => person.id === id)
+  if (!deletedPerson)
+    return response.status(404).json({
+      error: "person not found",
+    });
   persons = persons.filter((person) => person.id !== id);
-
-  response.status(204).end();
+  response.status(204).json({
+    message: `Person with id ${deletedPerson.id} deleted successfully`,
+  })
 });
 
 app.get("/info", (request, response) => {

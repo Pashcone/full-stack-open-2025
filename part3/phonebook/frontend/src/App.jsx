@@ -22,6 +22,7 @@ const App = () => {
 
   useEffect(() => {
     setFilteredPersons(getFilteredPersons(filter, persons));
+    console.log("filter", filter, persons);
   }, [filter, persons]);
 
   const handleSubmit = (newPerson) => {
@@ -67,7 +68,7 @@ const App = () => {
         .deletePerson(person.id)
         .then((response) => {
           console.log("response", response);
-          setPersons(persons.filter((p) => p.id !== response.id));
+          setPersons(persons.filter((p) => p.id !== person.id));
         })
         .catch(() => {
           changeMessage(
