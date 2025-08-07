@@ -1,0 +1,25 @@
+{
+  "name": "phonebook",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "node --watch index.js",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "eslint": "^9.30.1",
+    "globals": "^16.3.0"
+  }
+}
