@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 const app = express();
+app.use(express.static('dist'))
 
 let persons = [
   {
@@ -37,7 +38,6 @@ const requestLogger = (request, response, next) => {
 
 app.use(express.json());
 app.use(requestLogger);
-app.use(express.static('dist'))
 
 morgan.token("body", (req) => {
   return req.method === "POST" ? JSON.stringify(req.body) : "";
