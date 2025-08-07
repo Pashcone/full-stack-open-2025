@@ -34,21 +34,21 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
+app.use(express.static('dist'))
 app.use(express.json());
 app.use(requestLogger);
-app.use(express.static('dist'))
 
-morgan.token("body", (req) => {
-  return req.method === "POST" ? JSON.stringify(req.body) : "";
-});
-
-app.use(
-  morgan(":method :url :status :res[content-length] - :response-time ms :body")
-);
-
-// app.get("/", (request, response) => {
-//   response.send("<h1>Hello World!</h1>");
+// morgan.token("body", (req) => {
+//   return req.method === "POST" ? JSON.stringify(req.body) : "";
 // });
+
+// app.use(
+//   morgan(":method :url :status :res[content-length] - :response-time ms :body")
+// );
+
+app.get("/", (request, response) => {
+  response.send("<h1>Hello World!</h1>");
+});
 
 app.get("/api/persons", (request, response) => {
   response.json(persons);
