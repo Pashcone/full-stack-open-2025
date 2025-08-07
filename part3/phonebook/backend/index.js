@@ -1,5 +1,10 @@
 import express from "express";
 import morgan from "morgan";
+import { fileURLToPath } from 'url';
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -36,7 +41,7 @@ const requestLogger = (request, response, next) => {
 
 app.use(express.json());
 app.use(requestLogger);
-app.use(express.static('../frontend/dist'))
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 morgan.token("body", (req) => {
   return req.method === "POST" ? JSON.stringify(req.body) : "";
@@ -46,9 +51,9 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
 );
 
-// app.get("/", (request, response) => {
-//   response.send("<h1>Hello World!</h1>");
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 app.get("/api/persons", (request, response) => {
   response.json(persons);
