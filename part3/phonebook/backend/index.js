@@ -51,9 +51,6 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
 );
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-});
 
 app.get("/api/persons", (request, response) => {
   response.json(persons);
@@ -126,6 +123,12 @@ app.get("/info", (request, response) => {
      <p>${date}</p>`
   );
 });
+
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
