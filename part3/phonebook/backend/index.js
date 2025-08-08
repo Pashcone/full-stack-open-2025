@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(express.static("./part3/phonebook/backend/dist"));
+app.use(express.static("./"));
 
 let persons = [
   {
@@ -40,7 +40,7 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
-const dir = path.join(__dirname, "dist"); // or 'public'
+const dir = path.join(__dirname, "./"); // or 'public'
 
 app.use(express.json());
 app.use(requestLogger);
