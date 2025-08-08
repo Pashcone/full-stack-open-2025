@@ -1,11 +1,8 @@
 import express from "express";
 import morgan from "morgan";
-import path from "path";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
+app.use(express.static('./part3/phonebook/backend/dist'));
 
 let persons = [
   {
@@ -123,7 +120,6 @@ app.get("/info", (request, response) => {
 });
 
 
-app.use(express.static(path.join(__dirname, 'dist')))
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
