@@ -125,10 +125,9 @@ app.get("/info", (request, response) => {
 });
 
 
-app.get('/*', (req, res) => {
+app.get('/(.*)', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
-
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
