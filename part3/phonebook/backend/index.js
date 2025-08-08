@@ -1,12 +1,9 @@
 import express from "express";
 import morgan from "morgan";
-import { fileURLToPath } from 'url';
-import path from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
+
+app.use(express.static('dist'))
 
 let persons = [
   {
@@ -125,9 +122,6 @@ app.get("/info", (request, response) => {
 });
 
 
-app.get('/(.*)', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-});
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
