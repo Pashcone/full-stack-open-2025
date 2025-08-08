@@ -1,5 +1,10 @@
 import express from "express";
 import morgan from "morgan";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.static('./part3/phonebook/backend/dist'));
@@ -34,6 +39,26 @@ const requestLogger = (request, response, next) => {
   console.log("---");
   next();
 };
+
+const dir = path.join(__dirname, 'dist'); // or 'public'
+
+fs.readdir(dir, (err, files) => {
+  if (err) {
+    console.error('Error reading directory:', err);
+    return;
+  }
+  console.log('Directory entries:', files);
+});
+
+fs.readdir(dir, { withFileTypes: true }, (err, entries) => {
+  if (err) {
+    console.error('Error reading directory:', err);
+    return;
+  }
+  entries.forEach(entry => {
+    console.log(`${entry.name} — ${entry.isDirectory() ? 'directory' : 'file'}`);
+  });
+});
 
 app.use(express.json());
 app.use(requestLogger);
