@@ -1,8 +1,7 @@
 import express from "express";
 import morgan from "morgan";
-import { fileURLToPath } from 'url';
 import path from "path";
-
+import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -124,7 +123,7 @@ app.get("/info", (request, response) => {
 });
 
 
-app.use(express.static('dist'));
+app.use(express.static(path.join(__dirname, 'dist')))
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
