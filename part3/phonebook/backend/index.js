@@ -124,10 +124,7 @@ app.get("/info", (request, response) => {
 });
 
 
-app.get(/.*/, (req, res) => {
-res.sendFile(path.join(__dirname, "./dist/index.html"));
-});
-
+app.use(express.static('dist'));
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
